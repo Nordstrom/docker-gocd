@@ -12,11 +12,17 @@ RUN apt-get update -qy \
  && apt-get install -qy \
       go-server=${GOCD_VERSION}
 
-# ADD go-agent /etc/default
-
 EXPOSE 8153 8154
 
-ADD cruise-config.xml /etc/go/cruise-config.xml
-RUN chown go /etc/go/cruise-config.xml
+ADD cruise-config.xml log4j.properties /etc/go/
+RUN chown go:go /etc/go/*
 
-CMD /etc/init.d/go-server start && tail -F /var/log/go-server/go-server.log
+ENV MANUAL_SETTING=Y \
+    DAEMON=N \
+    SERVER_WORK_DIR=/var/lib/go-server \
+    GO_SERVER_PORT=8153 \
+    GO_SERVER_SSL_PORT=8154
+
+USER go
+
+ENTRYPOINT ["/usr/share/go-server/server.sh"]
