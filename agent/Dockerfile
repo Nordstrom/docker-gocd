@@ -1,0 +1,34 @@
+FROM nordstrom/java:8-jdk
+MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
+
+ENV GOCD_VERSION=16.1.0-2855 \
+    DOCKER_VERSION=1.9.1 \
+    GO_VERSION=1.5.3
+
+ADD gocd-gpg-key.asc /tmp/
+RUN echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /etc/apt/sources.list.d/brightbox_ruby.list \
+ && echo "deb https://download.go.cd /" > /etc/apt/sources.list.d/gocd.list \
+ && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
+ && apt-key add /tmp/gocd-gpg-key.asc
+
+RUN apt-get update -qy \
+ && apt-get install -qy \
+      ruby2.2 \
+      ruby2.2-dev \
+      go-agent=${GOCD_VERSION}
+
+RUN gem install bundler
+
+ADD https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz /tmp/go.tar.gz
+RUN mkdir /goroot /gopath \
+ && tar xvzf /tmp/go.tar.gz -C /goroot --strip-components=1
+
+ADD https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} /usr/bin/docker
+RUN chmod 744 /usr/bin/docker
+
+ADD go-agent /etc/default/
+ADD autoregister.properties /var/lib/go-agent/config/
+RUN chown go /var/lib/go-agent/config/autoregister.properties
+ADD entrypoint.sh /bin/
+
+CMD /bin/entrypoint.sh
