@@ -27,9 +27,16 @@ RUN mkdir /goroot /gopath \
 RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
  && chmod 744 /usr/bin/docker
 
-ADD go-agent /etc/default/
+ADD log4j.properties /var/lib/go-agent/
 ADD autoregister.properties /var/lib/go-agent/config/
-RUN chown go /var/lib/go-agent/config/autoregister.properties
-ADD entrypoint.sh /bin/
+RUN chown go:go -R /var/lib/go-agent/* \
+ && rm /etc/default/go-agent
 
-CMD /bin/entrypoint.sh
+USER go
+
+ENV DAEMON=N \
+    PRODUCTION_MODE=Y \
+    GO_SERVER_PORT=8153 \
+    AGENT_WORK_DIR=/var/lib/go-agent
+
+ENTRYPOINT ["/usr/share/go-agent/agent.sh"]
