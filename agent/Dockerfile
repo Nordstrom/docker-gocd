@@ -15,16 +15,17 @@ RUN apt-get update -qy \
  && apt-get install -qy \
       ruby2.2 \
       ruby2.2-dev \
-      go-agent=${GOCD_VERSION}
+      go-agent=${GOCD_VERSION} \
+      curl
 
 RUN gem install bundler
 
-ADD https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz /tmp/go.tar.gz
 RUN mkdir /goroot /gopath \
- && tar xvzf /tmp/go.tar.gz -C /goroot --strip-components=1
+ && curl -sL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | \
+      tar xvzf - -C /goroot --strip-components=1
 
-ADD https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} /usr/bin/docker
-RUN chmod 744 /usr/bin/docker
+RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
+ && chmod 744 /usr/bin/docker
 
 ADD go-agent /etc/default/
 ADD autoregister.properties /var/lib/go-agent/config/
