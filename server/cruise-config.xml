@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="75">
   <server agentAutoRegisterKey="388b633a88de126531afa41eff9aa69e" />
+  <pipelines group="bootstrap">
+    <pipeline name="bootstrap-build-pipelines">
+      <materials>
+        <git url="https://git.nordstrom.net/scm/rfid/pipeline-bootstrap.git" branch="master" />
+      </materials>
+      <stage name="load-pipelines">
+        <jobs>
+          <job name="load">
+            <tasks>
+              <exec command="bundle">
+                <arg>install</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="bundle">
+                <arg>exec</arg>
+                <arg>rake</arg>
+                <arg>refresh_pipelines</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
 </cruise>
