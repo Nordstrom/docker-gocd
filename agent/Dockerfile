@@ -18,7 +18,8 @@ RUN apt-get update -qy \
       ruby2.2 \
       ruby2.2-dev \
       go-agent=${GOCD_VERSION} \
-      curl
+      curl \
+      build-essential
 
 RUN mkdir /goroot /gopath \
  && curl -sL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | \
