@@ -31,6 +31,7 @@ RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-
 ADD log4j.properties /var/lib/go-agent/
 ADD autoregister.properties /var/lib/go-agent/config/
 
+# This is in place for enabling 'USER go' down the road
 RUN chown go:go -R /var/lib/go-agent/* \
  && mkdir /var/lib/gems \
  && mkdir /src \
@@ -39,7 +40,7 @@ RUN chown go:go -R /var/lib/go-agent/* \
  && chown go:go -R /usr/local/bin \
  && rm /etc/default/go-agent
 
-#USER go
+# USER go
 
 ENV DAEMON=N \
     PRODUCTION_MODE=Y \
