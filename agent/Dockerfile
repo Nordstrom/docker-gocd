@@ -30,11 +30,15 @@ RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-
 ADD log4j.properties /var/lib/go-agent/
 ADD autoregister.properties /var/lib/go-agent/config/
 RUN chown go:go -R /var/lib/go-agent/* \
+ && mkdir /var/lib/gems \
+ && chown go:go -R /var/lib/gems \
+ && chown go:go -R /usr/local/bin \
  && rm /etc/default/go-agent
 
 USER go
 
-RUN gem install bundler
+RUN echo "gem: --no-document" > $HOME/.gemrc \
+ && gem install bundler
 
 ENV DAEMON=N \
     PRODUCTION_MODE=Y \
