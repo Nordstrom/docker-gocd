@@ -38,12 +38,13 @@ RUN chown go:go -R /var/lib/go-agent/* \
 
 USER go
 
-RUN echo "gem: --no-document" > $HOME/.gemrc \
- && gem install bundler
-
 ENV DAEMON=N \
     PRODUCTION_MODE=Y \
     GO_SERVER_PORT=8153 \
-    AGENT_WORK_DIR=/var/lib/go-agent
+    AGENT_WORK_DIR=/var/lib/go-agent \
+    USER=go
+
+RUN echo "gem: --no-document" > $HOME/.gemrc \
+ && gem install bundler
 
 ENTRYPOINT ["/usr/share/go-agent/agent.sh"]
