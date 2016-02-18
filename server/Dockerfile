@@ -10,6 +10,7 @@ RUN echo "deb https://download.go.cd /" > /etc/apt/sources.list.d/gocd.list \
 
 RUN apt-get update -qy \
  && apt-get install -qy \
+      git \
       go-server=${GOCD_VERSION}
 
 EXPOSE 8153 8154
