@@ -20,8 +20,6 @@ RUN apt-get update -qy \
       go-agent=${GOCD_VERSION} \
       curl
 
-RUN gem install bundler
-
 RUN mkdir /goroot /gopath \
  && curl -sL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | \
       tar xvzf - -C /goroot --strip-components=1
@@ -35,6 +33,8 @@ RUN chown go:go -R /var/lib/go-agent/* \
  && rm /etc/default/go-agent
 
 USER go
+
+RUN gem install bundler
 
 ENV DAEMON=N \
     PRODUCTION_MODE=Y \
