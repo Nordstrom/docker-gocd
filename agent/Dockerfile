@@ -30,8 +30,8 @@ RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-
 
 ADD log4j.properties /var/lib/go-agent/
 ADD autoregister.properties /var/lib/go-agent/config/
-RUN chown go:go -R / \
- && rm /etc/default/go-agent
+RUN rm /etc/default/go-agent \
+ && chown go:go -R /
 
 USER go
 
