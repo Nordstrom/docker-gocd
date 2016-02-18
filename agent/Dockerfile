@@ -13,6 +13,8 @@ RUN echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /
 
 RUN apt-get update -qy \
  && apt-get install -qy \
+      git \
+      awscli \
       ruby2.2 \
       ruby2.2-dev \
       go-agent=${GOCD_VERSION} \
