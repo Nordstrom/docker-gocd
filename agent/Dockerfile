@@ -28,10 +28,17 @@ RUN mkdir /goroot /gopath \
 RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
  && chmod 744 /usr/bin/docker
 
+RUN update-ca-certificates --fresh
+
 ADD log4j.properties /var/lib/go-agent/
 ADD autoregister.properties /var/lib/go-agent/config/
-RUN rm /etc/default/go-agent \
- && chown go:go -R /
+
+RUN chown go:go -R /var/lib/go-agent/* \
+ && mkdir /var/lib/gems \
+ && mkdir /src \
+ && chown go:go -R /src \
+ && chown go:go -R /usr/local/bin \
+ && rm /etc/default/go-agent
 
 USER go
 
