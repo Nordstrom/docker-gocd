@@ -34,6 +34,7 @@ RUN chown go:go -R /var/lib/go-agent/* \
  && mkdir /var/lib/gems \
  && chown go:go -R /var/lib/gems \
  && chown go:go -R /usr/local/bin \
+ && chown go:go -R $JAVA_HOME \
  && rm /etc/default/go-agent
 
 USER go
