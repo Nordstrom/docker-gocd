@@ -35,6 +35,7 @@ RUN chown go:go -R /var/lib/go-agent/* \
  && mkdir /var/lib/gems \
  && mkdir /src \
  && chown go:go -R /src \
+ && chown go:go -R /var/lib/gems \
  && chown go:go -R /usr/local/bin \
  && rm /etc/default/go-agent
 
