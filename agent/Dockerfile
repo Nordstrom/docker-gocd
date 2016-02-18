@@ -39,7 +39,7 @@ RUN chown go:go -R /var/lib/go-agent/* \
  && chown go:go -R /usr/local/bin \
  && rm /etc/default/go-agent
 
-USER go
+#USER go
 
 ENV DAEMON=N \
     PRODUCTION_MODE=Y \
