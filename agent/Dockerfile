@@ -1,4 +1,4 @@
-FROM nordstrom/java:8-jdk
+FROM nordstrom/java-jdk:8
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 ENV GOCD_VERSION=16.1.0-2855 \
@@ -6,10 +6,10 @@ ENV GOCD_VERSION=16.1.0-2855 \
     GO_VERSION=1.5.3
 
 ADD gocd-gpg-key.asc /tmp/
-RUN echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /etc/apt/sources.list.d/brightbox_ruby.list \
- && echo "deb https://download.go.cd /" > /etc/apt/sources.list.d/gocd.list \
- && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
- && apt-key add /tmp/gocd-gpg-key.asc
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
+ && echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /etc/apt/sources.list.d/brightbox_ruby.list \
+ && apt-key add /tmp/gocd-gpg-key.asc \
+ && echo "deb https://download.go.cd /" > /etc/apt/sources.list.d/gocd.list
 
 RUN apt-get update -qy \
  && apt-get install -qy \
