@@ -24,7 +24,8 @@ RUN apt-get update -qy \
 RUN mkdir /goroot /gopath \
  && curl -sL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | \
       tar xvzf - -C /goroot --strip-components=1
-ENV GOROOT=/goroot GOPATH=/gopath PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+ENV GOROOT=/goroot GOPATH=/gopath
+ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
  && chmod 744 /usr/bin/docker
