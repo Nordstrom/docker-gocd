@@ -3,7 +3,8 @@ MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 ENV GOCD_VERSION=16.1.0-2855 \
     DOCKER_VERSION=1.9.1 \
-    GO_VERSION=1.5.3
+    GO_VERSION=1.5.3 \
+    TERRAFORM_VERSION=0.6.12
 
 ADD gocd-gpg-key.asc /tmp/
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
@@ -19,7 +20,8 @@ RUN apt-get update -qy \
       ruby2.2-dev \
       go-agent=${GOCD_VERSION} \
       curl \
-      build-essential
+      build-essential \
+      unzip
 
 RUN mkdir /goroot /gopath \
  && curl -sL https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | \
@@ -29,6 +31,12 @@ ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 RUN curl -sLo /usr/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION} \
  && chmod 744 /usr/bin/docker
+
+RUN mkdir -p /tmp/terraform && \
+  curl -L -o /tmp/terraform/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+  unzip /tmp/terraform/terraform.zip -d /tmp/terraform && \
+  mv /tmp/terraform/terraform /tmp/terraform/terraform-provider-aws /usr/local/bin && \
+  rm -rf /tmp/terraform
 
 ADD log4j.properties /var/lib/go-agent/
 ADD autoregister.properties /var/lib/go-agent/config/
