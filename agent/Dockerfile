@@ -9,6 +9,8 @@ ENV GOCD_VERSION=16.1.0-2855 \
 ADD gocd-gpg-key.asc /tmp/
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
  && echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" > /etc/apt/sources.list.d/brightbox_ruby.list \
+ && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442 \
+ && echo "deb http://download.fpcomplete.com/ubuntu trusty main" > /etc/apt/sources.list.d/haskell_stack.list \
  && apt-key add /tmp/gocd-gpg-key.asc \
  && echo "deb https://download.go.cd /" > /etc/apt/sources.list.d/gocd.list
 
@@ -21,6 +23,7 @@ RUN apt-get update -qy \
       go-agent=${GOCD_VERSION} \
       curl \
       build-essential \
+      stack \
       unzip
 
 RUN mkdir /goroot /gopath \
