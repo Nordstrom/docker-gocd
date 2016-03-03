@@ -2,6 +2,10 @@ FROM nordstrom/java-jdk:8
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
 ENV GOCD_VERSION=16.1.0-2855 \
+    AWSCLI_VERSION=1.2.9-2 \
+    GIT_VERSION=1:1.9.1-1ubuntu0.2 \
+    CURL_VERSION=7.35.0-1ubuntu2.6 \
+    STACK_VERSION=1.0.4-0~trusty \
     DOCKER_VERSION=1.9.1 \
     GO_VERSION=1.5.3 \
     TERRAFORM_VERSION=0.6.12
@@ -16,14 +20,14 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \
 
 RUN apt-get update -qy \
  && apt-get install -qy \
-      git \
-      awscli \
+      git=${GIT_VERSION} \
+      awscli=${AWSCLI_VERSION} \
       ruby2.2 \
       ruby2.2-dev \
       go-agent=${GOCD_VERSION} \
-      curl \
+      curl=${CURL_VERSION} \
       build-essential \
-      stack \
+      stack=${STACK_VERSION} \
       unzip
 
 RUN mkdir /goroot /gopath \
