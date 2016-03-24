@@ -27,6 +27,7 @@ RUN apt-get update -qy \
       curl=${CURL_VERSION} \
       build-essential \
       stack=${STACK_VERSION} \
+      maven \
       unzip
 
 RUN mkdir /goroot /gopath \
