@@ -1,9 +1,9 @@
 FROM nordstrom/java-jdk:8
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
-ENV GOCD_VERSION=16.1.0-2855 \
+ENV GOCD_VERSION=16.2.1-3027 \
     DOCKER_VERSION=1.9.1 \
-    GO_VERSION=1.5.3
+    GO_VERSION=1.6
 
 ADD gocd-gpg-key.asc /tmp/
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C3173AA6 \

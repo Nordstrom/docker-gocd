@@ -1,7 +1,7 @@
 FROM nordstrom/java:8
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
-ENV GOCD_VERSION=16.1.0-2855 \
+ENV GOCD_VERSION=16.2.1-3027 \
     DOCKER_VERSION=1.9.1
 
 ADD gocd-gpg-key.asc /tmp/
