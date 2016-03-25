@@ -1,12 +1,12 @@
 FROM nordstrom/java-jdk:8
 MAINTAINER Innovation Platform Team "invcldtm@nordstrom.com"
 
-ENV GOCD_VERSION=16.1.0-2855 \
+ENV GOCD_VERSION=16.2.1-3027 \
     AWSCLI_VERSION=1.2.9-2 \
     CURL_VERSION=7.35.0-1ubuntu2.6 \
     STACK_VERSION=1.0.4-0~trusty \
     DOCKER_VERSION=1.9.1 \
-    GO_VERSION=1.5.3 \
+    GO_VERSION=1.6 \
     TERRAFORM_VERSION=0.6.12
 
 ADD gocd-gpg-key.asc /tmp/
